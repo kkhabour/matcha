@@ -37,4 +37,6 @@ RUN gradle build
 EXPOSE 80
 # CMD ["java", "-jar", "target/sparkexample-jar-with-dependencies.jar"]
 
-CMD ["gradle", "run"]
+
+CMD tail -f /dev/null
+# CMD ["gradle", "run"]
