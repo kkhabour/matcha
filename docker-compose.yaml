@@ -17,8 +17,7 @@ services:
     volumes:
       - ./server/spark/src:/code/src
 
-  database:
-    container_name: mysql
+  mysql:
     image: mysql
     environment:
       MYSQL_ROOT_USERNAME: root
@@ -26,11 +25,21 @@ services:
     ports:
       - "3306:3306"
 
+
   phpmyadmin:
-    container_name: phpmyadmin
     image: phpmyadmin
     ports:
       - 3002:80
     environment:
       MYSQL_ROOT_PASSWORD: root
-      PMA_HOST: database
+      PMA_HOST: mysql
+    
+  mongodb:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    

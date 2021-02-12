@@ -16,7 +16,7 @@ then
 fi
 
 # add brew to PATH
-echo 'export PATH=/Users/kkhabour/brew/bin/:$PATH' >> /Users/kkhabour/.zshrc
+echo 'export PATH=/Users/kkhabour/goinfre/brew/bin/:$PATH' >> /Users/kkhabour/.zshrc
 source /Users/kkhabour/.zshrc
 
 if ! command -v docker &> /dev/null
@@ -52,15 +52,10 @@ fi
 
 
 # create (or start if existing) the default docker machine
-if docker-machine ls | grep -q 'camagru'
+if docker-machine ls | grep -q 'matcha'
 then
-    docker-machine start camagru
+    docker-machine start matcha
 else
-    docker-machine create --driver virtualbox camagru
-	docker-machine env camagru
-	eval $(docker-machine env camagru)
+    docker-machine create --driver virtualbox matcha
 fi
-
-docker-compose up
-
 

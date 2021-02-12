@@ -31,6 +31,12 @@ dependencies {
     // JWT tokens authentication
     implementation 'com.auth0:java-jwt:3.13.0'
 
+    // mongoDB java driver
+    compile 'org.mongodb:mongodb-driver-legacy:4.2.0'
+
+    // mysql java driver 
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.23'
+
 
     // Use JUnit test framework
     testCompile 'junit:junit:4.12'
