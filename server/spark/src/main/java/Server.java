@@ -1,32 +1,23 @@
 
-
 import static spark.Spark.*;
 
-
-import java.sql.*;
+import database.DBHelper;
 
 public class Server {
-        
-    public static void main(String[] arg){
-        
+
+    public static void main(String[] arg) {
+
         port(80);
 
         get("/setup", (req, res) -> {
-            DBHelper db = new DBHelper();
-            db.connect();
 
-            return db.checkIfDbExists();
+            DBHelper db = DBHelper.getInstance();
+            return "database setup";
         });
-
 
         get("/", (req, res) -> {
             return "Welcome";
         });
 
-
-
     }
-
-
-
 }

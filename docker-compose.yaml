@@ -1,14 +1,8 @@
 version: "3.9"
 
 services:
-  nginx:
-    build: ./server/nginx
-    ports:
-      - 8000:80
-      - 8001:443
-
-  server:
-    container_name: server
+  
+  backend:
     build: ./server/spark
     stdin_open: true
     ports:
@@ -33,13 +27,3 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       PMA_HOST: mysql
-    
-  mongodb:
-    image: mongo
-    restart: always
-    ports:
-      - 27017:27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
-    
