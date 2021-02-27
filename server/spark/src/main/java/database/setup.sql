@@ -8,8 +8,8 @@ CREATE TABLE users(
   lastname VARCHAR(20) NOT NULL,
   username VARCHAR(50) NOT NULL,
   email VARCHAR(50) NOT NULL,
-  created_at DATETIME DEFAULT current_timestamp() NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
-  UNIQUE KEY username (username),
-  UNIQUE KEY email (email)
-)
+  UNIQUE (username),
+  UNIQUE (email)
+);

@@ -17,31 +17,49 @@ public class DBHelper {
 
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "root";
-    private static final String URL = "jdbc:mysql://mysql:3306/";
 
-    private Connection connection = null;
-    private Statement statement = null;
-    private PreparedStatement preparedStatement = null;
-    private ResultSet resultSet = null;
+    // allowMultiQueries is a connection param that allowes to sent multiple querie to mysql
+    private static final String URL = "jdbc:mysql://mysql:3306/?allowMultiQueries=true";
 
-    private boolean isDb = false;
+    private Connection connection;
+    private Statement statement;
+    private PreparedStatement preparedStatement;
+    private ResultSet resultSet;
 
+    private boolean isOpen;
+    private boolean isDatabaseCreated;
+
+
+
+    // constructor
+    public DBHelper() {
+        this.connection = null;
+        this.statement = null;
+        this.preparedStatement = null;
+        this.resultSet = null;
+        this.isOpen = false;
+        this.isDatabaseCreated = false;
+    }
+
+
+    // Get an instance of object singleton
     public static DBHelper getInstance() {
 
         if (instance == null) {
             instance = new DBHelper();
             instance.open();
             instance.createDatabase();
-            instance.isDb = true;
         }
         return instance;
     }
 
+    // Open connection with database
     public void open() {
-        if (this.connection != null)
+        if (this.isOpen)
             return;
         try {
             this.connection = DriverManager.getConnection(URL, DB_USERNAME, DB_PASSWORD);
+            this.isOpen = true;
         } catch (SQLException e) {
 
             System.out.println("SQLException: " + e.getMessage());
@@ -72,20 +90,6 @@ public class DBHelper {
         return this.resultSet;
     }
 
-    public void printUser() {
-        if (resultSet == null)
-            return;
-        try {
-            while (this.resultSet.next()) {
-                System.out.println(resultSet.getString("email"));
-            }
-        } catch (SQLException e) {
-            System.out.println("SQLException: " + e.getMessage());
-            System.out.println("SQLState: " + e.getSQLState());
-            System.out.println("VendorError: " + e.getErrorCode());
-        }
-    }
-
     private String readfile(String path) {
         String content = "";
         try {
@@ -104,10 +108,11 @@ public class DBHelper {
 
     public void createDatabase() {
         String query = readfile("./src/main/java/database/setup.sql");
-        System.out.println("Query content: " + query + "\n\n\n\n\n");
+        System.out.println("\nQuery content: " + query + "\n");
         try {
             this.statement = this.connection.createStatement();
-            this.statement.executeUpdate(query);
+            this.statement.execute(query);
+            
 
             System.out.println("Databse created successfully");
         } catch (SQLException e) {
