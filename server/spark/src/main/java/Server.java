@@ -1,30 +1,26 @@
 
 import static spark.Spark.*;
 
-import database.DBHelper;
-import routes.Register;
+import handlers.*;
 
 public class Server {
-
+    
     public static void main(String[] arg) {
 
         port(80);
 
-        get("/setup", (req, res) -> {
-            DBHelper db = DBHelper.getInstance();
-            return "database setup";
-        });
 
-        get("/", (req, res) -> {
+        RootCalls rootCalls = new RootCalls();
+        rootCalls.start();
 
-            DBHelper dbHelper = DBHelper.getInstance();
+        RegisterCalls registerCalls = new RegisterCalls();
+        registerCalls.start();
 
-            return "Welcome to Matcha";
-        });
 
+        LoginCalls loginCalls = new LoginCalls();
+        loginCalls.start();
         
 
-        get("/register", Register::register);
         
 
     }

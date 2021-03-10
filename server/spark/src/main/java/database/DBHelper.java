@@ -117,6 +117,7 @@ public class DBHelper {
             System.out.println("Databse created successfully");
         } catch (SQLException e) {
             System.out.println("database error : " + e.getMessage());
+            System.out.println("database error code:" + e.getErrorCode());
         }
     }
 
